@@ -1,7 +1,7 @@
 
 fun main( args : Array<String> ) {
   val bs = readLine()!!
-  "abcdefghijklm".map { x ->
+  val cs = "abcdefghijklm".map { x ->
     val mm = (bs + x.toString())
       .toList()
       .groupBy { 
@@ -21,5 +21,13 @@ fun main( args : Array<String> ) {
       }
     }
     res
+  }.filter {
+    it != null
+  }
+  when {
+    cs.size == 0 -> println("Impossible")
+    else -> cs.map {
+      println(it)
+    }
   }
 }
