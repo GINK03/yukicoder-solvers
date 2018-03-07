@@ -4,27 +4,21 @@ fun main(args: Array<String>) {
   val xs = (1..ws).map { 0 }.toMutableList()
   
   var check = false
-  (1..n).map { 
+  val arrs = (1..n).map { 
     val arr = readLine()!!.split(" ").map { it.toInt() }
-      
-    when  { 
-      arr.sum() != 0 -> { arr.mapIndexed { index, x ->
-            xs[index] += x
-          }
-          xs.toList()
-        }
-      else -> null
+    arr
+  }
+  
+  total@for( arr in arrs ) {
+    arr.mapIndexed { index, x ->
+      xs[index] += x
     }
-  }.filter { it != null }
-  .map { xsn ->
-    val xs = xsn!! 
-    if( check == false ) {
-      scan@for( s in (0..xs.size-1) ) { 
-        for( e in (s..xs.size-1) ) { 
-          if( xs.slice(s..e).sum() == 777) {
-            check = true
-            continue@scan
-          }
+    // 尺取サーチ
+    for( left in (0..xs.size-1) ) {
+      for( right in (left..xs.size-1) ) {
+        if( xs.slice( (left..right) ).sum() == 777 ) {
+          check = true
+          break@total
         }
       }
     }
