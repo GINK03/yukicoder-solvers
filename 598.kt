@@ -13,27 +13,41 @@ fun main(args:Array<String>) {
 
   
   // 補数
-  val xb = java.lang.Integer.toBinaryString(x) 
+  val xb = java.lang.Integer.toBinaryString(x).toInt(2) 
   val bb = java.lang.Integer.toBinaryString(b).toInt(2)
   
-  var sum = xb.toInt(2)
-  var result = 0
-  val searchRange = (1..normal+1).toList()
-  
 
-  while(true){
-    sum +=  bb
-    val sumstr = java.lang.Integer.toBinaryString(sum).padStart(n, '0')
+  //val searchRange = (1..normal+1).toList()
   
-    result = i
+  var size = normal
+  var mid = size/2
+
+  var cure = 0
+  master@while(true) {
+    val sum = xb + bb*mid
+    val sumstr = java.lang.Integer.toBinaryString(sum).padStart(n, '0')
     if( sumstr[0] == '1' ) {
-      break
+      // start under search
+      for( scan in (mid downTo 0) ) {
+        val sum = xb + bb*scan
+        val sumstr = java.lang.Integer.toBinaryString(sum).padStart(n, '0')
+        cure = scan
+        if( sumstr[0] == '1' )
+          break@master
+      }
+    } else { 
+      mid = (mid + size+1)/2
+    }
+    if(mid == size) {
+      // 探索失敗
+      cure = normal + 1
+      break@master
     }
   }
  
   
-  println(normal)
-  println(result)
-  val output = listOf(normal, result).min()
+  //println(normal)
+  //println(cure)
+  val output = listOf(normal, cure).min()
   println(output)
 }
